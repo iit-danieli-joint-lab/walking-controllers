@@ -302,6 +302,9 @@ void RetargetingClient::getFeedback()
 
         m_rightHand.smoother->computeNextValues(m_rightHand.yarpVector);
         convertYarpVectorPoseIntoTransform(m_rightHand.smoother->getPos(), m_rightHandTransform);
+
+
+        yInfo() << "ciao hand";
     }
 
     if(m_useJointRetargeting)
@@ -326,7 +329,8 @@ void RetargetingClient::getFeedback()
         {
             auto desiredCoMHeight = m_comHeight.port.read(false);
             if(desiredCoMHeight != nullptr)
-                m_comHeight.yarpVector(0) = (*desiredCoMHeight)(2) - m_comHeightInputZero
+
+                m_comHeight.yarpVector(0) = ((*desiredCoMHeight)(2) - m_comHeightInputZero) * 0.5
                     + m_comConstantHeight;
         }
 
